@@ -1,110 +1,43 @@
-// Clase base
-class Animal {
-    protected int edad;
-    private String color;
+import java.util.ArrayList;
 
-    public Animal(int e) {
-        this.edad = e;
-        this.color = "Desconocido";
-    }
+public class Main
+{
+	public static void main(String[] args) {
 
-    public void hacerSonido() {
-        System.out.println("El animal hace un sonido");
-    }
+	    ArrayList<Vehiculo> vehiculos = new ArrayList<>();
 
-    public void color() {
-        System.out.println("El animal tiene un color");
-    }
+		vehiculos.add(new Auto("Nissan", "Platina", 0));
 
-    public void setEdad(int e) {
-        this.edad = e;
-    }
+		vehiculos.add(new Motocicleta("Italika", "125Z", 0));
 
-    public int getEdad() {
-        return this.edad;
-    }
+		vehiculos.add(new Camion("PACCAR", "Peterbilt 379", 0));
+		
+		Auto A1 = (Auto) vehiculos.get(0);
+        A1.setAnio(2005);
+        
+        Motocicleta M1 = (Motocicleta) vehiculos.get(1);
+        M1.setAnio(2020);
 
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getColor() {
-        return this.color;
-    }
+		Camion C1 = (Camion) vehiculos.get(2);
+		C1.setAnio(2007);
+		
+		A1.Encender();
+		
+		A1.Apagar();
+		
+		A1.Describir();
+		
+		M1.Encender();
+		
+		M1.Apagar();
+		
+		M1.Describir();
+		
+		C1.Encender();
+			
+		C1.Apagar();
+		
+		C1.Describir();
+	
+	}
 }
-
-// Clases derivadas
-class Perro extends Animal {
-    public Perro(int e) {
-        super(e);
-    }
-
-    @Override
-    public void hacerSonido() {
-        System.out.println("El perro ladra");
-    }
-
-    public void comer() {
-        System.out.println("El perro está comiendo carne.");
-    }
-}
-
-class Nutria extends Animal {
-    public Nutria(int e) {
-        super(e);
-    }
-
-    @Override
-    public void hacerSonido() {
-        System.out.println("La nutria chilla");
-    }
-
-    public void comer() {
-        System.out.println("La nutria come cangrejos.");
-    }
-}
-
-class Oso extends Animal {
-    public Oso(int e) {
-        super(e);
-    }
-
-    @Override
-    public void hacerSonido() {
-        System.out.println("El oso gruñe");
-    }
-
-    public void comer() {
-        System.out.println("El oso está comiendo peces.");
-    }
-}
-
-public class Main {
-    public static void main(String[] args) {
-        Animal miAnimal = new Animal(5);
-        miAnimal.hacerSonido();
-        miAnimal.setColor("Gris");
-        System.out.println("Color del animal: " + miAnimal.getColor());
-
-        Perro miPerro = new Perro(7);
-        miPerro.hacerSonido();
-        miPerro.setColor("Marrón");
-        System.out.println("Color del perro: " + miPerro.getColor());
-
-        Animal miPerro2 = new Perro(10);
-        miPerro2.hacerSonido();
-        miPerro2.setColor("Blanco");
-        System.out.println("Color del segundo perro: " + miPerro2.getColor());
-
-        Nutria miNutria = new Nutria(4);
-        miNutria.hacerSonido();
-        miNutria.setColor("Café");
-        System.out.println("Color de la nutria: " + miNutria.getColor());
-
-        Oso miOso = new Oso(2);
-        miOso.hacerSonido();
-        miOso.setColor("Amarillo");
-        System.out.println("Color del oso: " + miOso.getColor());
-    }
-}
-
