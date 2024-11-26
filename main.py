@@ -1,51 +1,65 @@
-from biblioteca import Biblioteca
+#made by fabs, uriel and omar
 
+# Importación de la clase CuentaBancaria y las excepciones personalizadas desde el archivo cuenta_bancaria.py
+from cuenta_bancaria import CuentaBancaria, DepositoInvalidoException, RetiroInvalidoException, FondosInsuficientesException
+
+# Función principal que implementa un menú interactivo para realizar operaciones bancarias.
 def main():
-    mi_biblioteca = Biblioteca()
+    """
+    Función principal para ejecutar el sistema bancario.
+    Permite realizar operaciones de depósito, retiro y consulta de saldo.
+    Maneja excepciones personalizadas y valida entradas del usuario.
+    """
+    print("Bienvenido al sistema de gestión de transacciones bancarias.")  # Mensaje de bienvenida.
+    # Solicita al usuario el número de cuenta y saldo inicial.
+    numeroCuenta = input("Ingrese el número de cuenta: ")
+    saldoInicial = float(input("Ingrese el saldo inicial: "))
+    # Crea una instancia de CuentaBancaria con los datos proporcionados por el usuario.
+    cuenta = CuentaBancaria(numeroCuenta, saldoInicial)
 
     while True:
-        print("\n--- Menú de Biblioteca ---")
-        print("1. Agregar un libro")
-        print("2. Mostrar todos los libros")
-        print("3. Buscar un libro por ISBN")
-        print("4. Prestar un libro")
-        print("5. Regresar un libro")
-        print("6. Salir")
-
+        # Muestra un menú de opciones al usuario.
+        print("\n--- Operaciones Bancarias ---")
+        print("1. Depositar dinero")
+        print("2. Retirar dinero")
+        print("3. Consultar saldo")
+        print("4. Salir")
         opcion = input("Seleccione una opción: ")
 
-        if opcion == '1':
-            titulo = input("Ingrese el título del libro: ")
-            autor = input("Ingrese el autor del libro: ")
-            isbn = input("Ingrese el ISBN del libro: ")
-            mi_biblioteca.agregar_libro(titulo, autor, isbn)
-
-        elif opcion == '2':
-            mi_biblioteca.mostrar_libros()
-
-        elif opcion == '3':
-            isbn = input("Ingrese el ISBN del libro a buscar: ")
-            libro = mi_biblioteca.buscar_libro(isbn)
-            if libro:
-                print("\nLibro encontrado:")
-                print(libro) 
+        try:
+            if opcion == "1":
+                # Opción para depositar dinero.
+                cantidad = float(input("Ingrese la cantidad a depositar: "))
+                cuenta.depositar(cantidad)  # Llama al método depositar.
+                print(f"Depósito exitoso. Saldo actual: {cuenta.saldo:.2f}")  # Muestra el saldo actualizado.
+            elif opcion == "2":
+                # Opción para retirar dinero.
+                cantidad = float(input("Ingrese la cantidad a retirar: "))
+                cuenta.retirar(cantidad)  # Llama al método retirar.
+                print(f"Retiro exitoso. Saldo actual: {cuenta.saldo:.2f}")  # Muestra el saldo actualizado.
+            elif opcion == "3":
+                # Opción para consultar el saldo actual.
+                print(f"Saldo actual: {cuenta.saldo:.2f}")  # Muestra el saldo sin cambios.
+            elif opcion == "4":
+                # Opción para salir del programa.
+                print("Gracias por usar el sistema. Hasta luego.")  # Mensaje de despedida.
+                break  # Finaliza el bucle y cierra el programa.
             else:
-                print("No se encontró ningún libro con ese ISBN.")
+                # Manejo de opción inválida en el menú.
+                print("Opción inválida. Intente de nuevo.")
+        except DepositoInvalidoException as e:
+            # Captura y muestra el error si se intenta depositar un monto negativo.
+            print(f"Error: {e}")
+        except RetiroInvalidoException as e:
+            # Captura y muestra el error si se intenta retirar un monto negativo.
+            print(f"Error: {e}")
+        except FondosInsuficientesException as e:
+            # Captura y muestra el error si se intenta retirar más del saldo disponible.
+            print(f"Error: {e}")
+        except ValueError:
+            # Captura errores de conversión de entrada inválida (por ejemplo, texto en lugar de números).
+            print("Error: Entrada inválida. Ingrese un número válido.")
 
-        elif opcion == '4':
-            isbn = input("Ingrese el ISBN del libro a prestar: ")
-            mi_biblioteca.prestar_libro(isbn)
-
-        elif opcion == '5':
-            isbn = input("Ingrese el ISBN del libro a regresar: ")
-            mi_biblioteca.regresar_libro(isbn)
-
-        elif opcion == '6':
-            print("Saliendo del programa.")
-            break
-
-        else:
-            print("Opción inválida. Por favor, seleccione una opción válida.")
-
+# Punto de entrada del programa.
 if __name__ == "__main__":
-    main()
+    main()  # Llama a la función principal.
